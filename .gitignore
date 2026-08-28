@@ -1,0 +1,14 @@
+# Secrets (use GitHub Actions secrets for LASTFM_* / GH_STATS_TOKEN)
+.env
+.env.*
+
+# Node
+node_modules/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
