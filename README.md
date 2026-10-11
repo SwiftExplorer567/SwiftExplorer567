@@ -1,6 +1,6 @@
 <h2 align="left">
   Hi, I'm SwiftExplorer567
-  <img src="https://komarev.com/ghpvc/?username=SwiftExplorer567&label=views&style=flat" alt="Profile views" />
+  <img src="https://hits.sh/github.com/SwiftExplorer567.svg?label=views&amp;style=flat&amp;color=007ec6&amp;labelColor=2e343b" alt="Profile views" />
 </h2>
 
 <p align="center">
