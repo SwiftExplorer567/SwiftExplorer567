@@ -1,0 +1,61 @@
+name: Refresh GitHub profile cards
+
+on:
+  schedule:
+    - cron: '17 3 * * *' # Daily at 03:17 UTC
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - .github/workflows/profile-summary-cards.yml
+      - scripts/sync_profile_cards.py
+
+permissions:
+  contents: write
+
+concurrency:
+  group: github-profile-summary-cards
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout profile repository
+        uses: actions/checkout@v4
+
+      - name: Check for a read-only GitHub API token
+        env:
+          PROFILE_API_TOKEN: ${{ secrets.SUMMARY_GITHUB_TOKEN || secrets.GH_STATS_TOKEN }}
+        run: |
+          if [ -z "$PROFILE_API_TOKEN" ]; then
+            echo "::error::Create an Actions secret named SUMMARY_GITHUB_TOKEN (fine-grained PAT with public-repo read access). GH_STATS_TOKEN is also supported."
+            exit 1
+          fi
+
+      - name: Generate dark profile cards locally
+        # Pinned to the upstream release branch commit; review before upgrading.
+        uses: vn7n24fzkq/github-profile-summary-cards@09ba4dde3f9b05828cb99553561db3f4ff07703f
+        env:
+          GITHUB_TOKEN: ${{ secrets.SUMMARY_GITHUB_TOKEN || secrets.GH_STATS_TOKEN }}
+        with:
+          USERNAME: SwiftExplorer567
+          UTC_OFFSET: '3'
+          THEME: github_dark
+          AUTO_PUSH: false
+
+      - name: Validate all cards and update README references
+        run: python3 scripts/sync_profile_cards.py
+
+      - name: Commit refreshed static SVGs
+        run: |
+          git add README.md profile-summary-card-output/github_dark/
+          if git diff --cached --quiet; then
+            echo "Profile cards are already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: refresh cached GitHub profile cards"
+          git push
