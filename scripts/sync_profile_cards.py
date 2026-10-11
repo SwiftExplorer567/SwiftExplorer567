@@ -36,7 +36,7 @@ def main() -> None:
             raise SystemExit(f"Missing or suspiciously small generated card: {path}")
 
         svg = path.read_text(encoding="utf-8")
-        if (not re.search(r"<svg\\b", svg) or "</svg>" not in svg
+        if (not re.search(r"<svg\b", svg) or "</svg>" not in svg
                 or any(marker in svg.lower() for marker in ERROR_MARKERS)):
             raise SystemExit(f"Generated card does not look valid: {path}")
 
