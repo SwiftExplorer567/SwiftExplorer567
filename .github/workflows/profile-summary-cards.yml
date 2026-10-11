@@ -2,13 +2,13 @@ name: Refresh GitHub profile cards
 
 on:
   schedule:
-    - cron: '17 3 * * *' # Daily at 03:17 UTC
+    - cron: '17 3 * * *' # Daily at 03:17 UTC (06:17 Türkiye)
   workflow_dispatch:
   push:
     branches: [master]
     paths:
       - .github/workflows/profile-summary-cards.yml
-      - scripts/sync_profile_cards.py
+      - scripts/validate_profile_cards.py
 
 permissions:
   contents: write
@@ -22,8 +22,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Checkout profile repository
+      - name: Checkout default branch (source only)
         uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Checkout asset branch separately (publish target)
+        uses: actions/checkout@v4
+        with:
+          ref: profile-assets
+          path: .profile-assets-checkout
 
       - name: Check for a read-only GitHub API token
         env:
@@ -34,8 +42,8 @@ jobs:
             exit 1
           fi
 
-      - name: Generate dark profile cards locally
-        # Pinned to the upstream release branch commit; review before upgrading.
+      - name: Generate dark profile cards
+        # Pinned upstream release: review its code before changing this SHA.
         uses: vn7n24fzkq/github-profile-summary-cards@09ba4dde3f9b05828cb99553561db3f4ff07703f
         env:
           GITHUB_TOKEN: ${{ secrets.SUMMARY_GITHUB_TOKEN || secrets.GH_STATS_TOKEN }}
@@ -45,17 +53,25 @@ jobs:
           THEME: github_dark
           AUTO_PUSH: false
 
-      - name: Validate all cards and update README references
-        run: python3 scripts/sync_profile_cards.py
+      - name: Validate generated SVGs and README asset links
+        run: python3 scripts/validate_profile_cards.py
 
-      - name: Commit refreshed static SVGs
+      - name: Commit changed SVGs on profile-assets branch only
+        shell: bash
         run: |
-          git add README.md profile-summary-card-output/github_dark/
-          if git diff --cached --quiet; then
-            echo "Profile cards are already up to date."
+          set -euo pipefail
+          output="profile-summary-card-output/github_dark"
+          target=".profile-assets-checkout/$output"
+          mkdir -p "$target"
+          cp "$output"/*.svg "$target/"
+
+          git -C .profile-assets-checkout add -- "$output"/*.svg
+          if git -C .profile-assets-checkout diff --cached --quiet; then
+            echo "No SVG changes. Skipping commit."
             exit 0
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore: refresh cached GitHub profile cards"
-          git push
+
+          git -C .profile-assets-checkout config user.name "github-actions[bot]"
+          git -C .profile-assets-checkout config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C .profile-assets-checkout commit -m "chore: refresh cached GitHub profile cards"
+          git -C .profile-assets-checkout push origin HEAD:profile-assets

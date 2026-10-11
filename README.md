@@ -9,15 +9,15 @@
 </p>
 
 <p align="center">
-  <img src="./profile-summary-card-output/github_dark/0-profile-details.svg" width="100%" />
+  <img src="https://raw.githubusercontent.com/SwiftExplorer567/SwiftExplorer567/profile-assets/profile-summary-card-output/github_dark/0-profile-details.svg" width="100%" />
 </p>
 
 <p align="center">
-  <img src="./profile-summary-card-output/github_dark/3-stats.svg" width="48%" />
-  <img src="./profile-summary-card-output/github_dark/4-productive-time.svg" width="48%" />
+  <img src="https://raw.githubusercontent.com/SwiftExplorer567/SwiftExplorer567/profile-assets/profile-summary-card-output/github_dark/3-stats.svg" width="48%" />
+  <img src="https://raw.githubusercontent.com/SwiftExplorer567/SwiftExplorer567/profile-assets/profile-summary-card-output/github_dark/4-productive-time.svg" width="48%" />
 </p>
 
 <p align="center">
-  <img src="./profile-summary-card-output/github_dark/1-repos-per-language.svg" width="48%" />
-  <img src="./profile-summary-card-output/github_dark/2-most-commit-language.svg" width="48%" />
+  <img src="https://raw.githubusercontent.com/SwiftExplorer567/SwiftExplorer567/profile-assets/profile-summary-card-output/github_dark/1-repos-per-language.svg" width="48%" />
+  <img src="https://raw.githubusercontent.com/SwiftExplorer567/SwiftExplorer567/profile-assets/profile-summary-card-output/github_dark/2-most-commit-language.svg" width="48%" />
 </p>
