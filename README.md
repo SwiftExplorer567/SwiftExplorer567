@@ -9,15 +9,15 @@
 </p>
 
 <p align="center">
-  <img src="https://github-profile-summary-cards-y74b.vercel.app/api/cards/profile-details?username=SwiftExplorer567&theme=github_dark" width="100%" />
+  <img src="./profile-summary-card-output/github_dark/0-profile-details.svg" width="100%" />
 </p>
 
 <p align="center">
-  <img src="https://github-profile-summary-cards-y74b.vercel.app/api/cards/stats?username=SwiftExplorer567&theme=github_dark" width="48%" />
-  <img src="https://github-profile-summary-cards-y74b.vercel.app/api/cards/productive-time?username=SwiftExplorer567&theme=github_dark&utcOffset=3" width="48%" />
+  <img src="./profile-summary-card-output/github_dark/3-stats.svg" width="48%" />
+  <img src="./profile-summary-card-output/github_dark/4-productive-time.svg" width="48%" />
 </p>
 
 <p align="center">
-  <img src="https://github-profile-summary-cards-y74b.vercel.app/api/cards/repos-per-language?username=SwiftExplorer567&theme=github_dark" width="48%" />
-  <img src="https://github-profile-summary-cards-y74b.vercel.app/api/cards/most-commit-language?username=SwiftExplorer567&theme=github_dark" width="48%" />
+  <img src="./profile-summary-card-output/github_dark/1-repos-per-language.svg" width="48%" />
+  <img src="./profile-summary-card-output/github_dark/2-most-commit-language.svg" width="48%" />
 </p>
